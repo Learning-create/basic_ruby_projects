@@ -1,37 +1,56 @@
-require 'pry-byebug'
+def encript(string, key)
 
-array_numbers = []
-array_plus_key = []
-array_coded = []
-coded_message = ""
+    ascii_array = string.split("").map {|letter| letter.ord}
 
-puts "What message you want to encode?"
-message = gets.chop
+    number_array = ascii_array.map do |number|
 
-puts "Give me a number"
-number = gets.to_i
+        if number.between?(65,90)
 
-keys = "a".upto("z").to_a
+            if number + key > 90
 
-encription_key = {}
+                number -= 26
 
+            elsif number + key < 65
 
-def encript_message(array)
+                number += 26
 
-    original_array = message.split("")
+            end
 
-    keys.each do |variable|
-        encription_key[variable] = keys.index(variable)
+            number + key
+
+        elsif number.between?(97,122)
+
+            if number + key > 122
+
+                number -= 26
+
+            elsif number + key < 97
+
+                number += 26
+
+            end
+
+            number + key
+
+        else 
+
+            number
+        end
+
     end
 
-    original_array.each {|letter| array_numbers.push(encription_key.fetch(letter))}
+    coded_mesage = number_array.map {|number| number.chr}.join("")
 
-    array_numbers.each {|number| array_plus_key.push(number + 1)}
-
-    array_plus_key.each {|number| array_coded.push(encription_key.key(number))}
-
-    coded_message = array_coded.join("")
-
-    puts coded_message
+    puts coded_mesage
 
 end
+
+puts "What you want to encript?"
+
+message = gets.chomp
+
+puts "Give me a number please"
+
+key = gets.chomp.to_i
+
+encript(message, key)
